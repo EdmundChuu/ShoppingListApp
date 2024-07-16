@@ -14,10 +14,10 @@ This project is intriguing because it merges practical utility with the opportun
 
 ##Task 3 User Stories
 
-- As a user, I want to be able to add an item to my shopping list and specify the name, category, quantity and price of the item.
+- As a user, I want to be able to add an arbitrary amount of items to my shopping list and specify the name, category, quantity and price of the item.
 - As a user, I want to be able to view the list of items in my shopping list.
 - As a user, I want to be able to mark an item as purchased on my shopping list.
 - As a user, I want to be able to delete an item from my shopping list.
 - As a user, I want to be able to clear all purchased items from my shopping list.
 - As a user, I want to be able to categorize items by departments or types.
-- As a user, I want to be able to edit items in my shopping list, including the name and the category and quanitty of the price of the item. 
+- As a user, I want to be able to edit items in my shopping list, including the name and the category and quanitty  of the price of the item. 
