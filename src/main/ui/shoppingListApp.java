@@ -1,16 +1,19 @@
 package ui;
 
+import model.ShoppingItemList;
 import model.shoppingItem;
 import exceptions.InvalidInputException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class shoppingListApp {
-    private ArrayList<shoppingItem> shoppingList;
+    private ShoppingItemList shoppingItemList;
     private Scanner scanner;
+    private ArrayList<shoppingItem> shoppingList;
 
     public shoppingListApp() {
-        shoppingList = new ArrayList<>();
+        shoppingItemList = new ShoppingItemList("Your Shopping List");
+        shoppingList = shoppingItemList.getList();
         scanner = new Scanner(System.in);
         runApp();
     }
@@ -41,6 +44,8 @@ public class shoppingListApp {
                     case 6:
                         editItem();
                         break;
+                    case 7:
+                        getTotal();
                     case 0:
                         System.out.println("Thank you! Come back again!");
                         running = false;
@@ -65,6 +70,7 @@ public class shoppingListApp {
         System.out.println("4. Delete Item");
         System.out.println("5. Clear Purchased Items");
         System.out.println("6. Edit Item");
+        System.out.println("7. Get Total Price");
         System.out.println("0. Exit");
         System.out.println("Enter your choice: ");
     }
@@ -160,13 +166,18 @@ public class shoppingListApp {
                     item.setPrice(newPrice);
                     item.setAmount(newAmount);
                     System.out.println("Item updated in the shopping list.");
-                    return;
+                    return; 
                 } catch (NumberFormatException e) {
                     throw new InvalidInputException("Invalid input. Price must be a number and quantity must be an integer.");
                 } 
             }
         }
         System.out.println("Item not found in the shopping list.");
+    }
+
+    //Get total price of the list of items.
+    private void getTotal() {
+        System.out.println(shoppingItemList.getTotPrice());
     }
 
     // Validate item name
