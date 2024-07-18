@@ -5,13 +5,11 @@ import java.util.ArrayList;
 public class ShoppingItemList {
     private String name;
     private boolean completion;
-    private double totPrice;
     private ArrayList<shoppingItem> theList; 
 
     public ShoppingItemList(String name) {
         this.name = name;
         this.completion = false;
-        this.totPrice = 0;
         this.theList = new ArrayList<>();
     }
 
@@ -22,17 +20,17 @@ public class ShoppingItemList {
     public String getListName() {
         return this.name;
     }
-
-    public void setListPrice(double settedPrice) {
-        this.totPrice = settedPrice;
-    }
-
+/** 
+ * Effects:  Returns the total price of all items in the shopping list.
+ * The total price is calculated by summing the product of 
+ * the price and amount for each item in the list.
+*/
     public double getTotPrice() {
-        for(shoppingItem si : this.theList) {
-            si.getPrice();
-            this.totPrice = 0;
+        double totPrice = 0;
+        for (shoppingItem si : this.theList) {
+            totPrice += si.getPrice() * si.getAmount();
         }
-        return this.totPrice;
+        return totPrice;
     }
 
     public void setCompletion(boolean settedCompletion) {
