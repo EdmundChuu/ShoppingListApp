@@ -21,3 +21,5 @@ This project is intriguing because it merges practical utility with the opportun
 - As a user, I want to be able to clear all purchased items from my shopping list.
 - As a user, I want to be able to categorize items by departments or types.
 - As a user, I want to be able to edit items in my shopping list, including the name and the category and quanitty  of the price of the item. 
+- As a user, I want to be able to save my shopping list to file (if I so choose)
+- As a user, I want to be able to be able to load my shopping list from file (if I so choose)
