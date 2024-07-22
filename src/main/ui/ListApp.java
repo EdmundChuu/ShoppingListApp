@@ -3,25 +3,30 @@ package ui;
 import model.ShoppingItemList;
 import model.shoppingItem;
 import exceptions.InvalidInputException;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// Shopping List Application
 public class ListApp {
+    private static final String JSON_STORE = "./data/shoppinglist.json";
     private ShoppingItemList shoppingItemList;
     private Scanner scanner;
     private ArrayList<shoppingItem> shoppingList;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
-    // EFFECTS: runs the Shopping List Application
     public ListApp() {
         shoppingItemList = new ShoppingItemList("Your Shopping List");
-        shoppingList = shoppingItemList.getList();
+        shoppingList = new ArrayList<>(shoppingItemList.getList());
         scanner = new Scanner(System.in);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runApp();
     }
 
-    // MODIFIES: this
-    // EFFECTS: processes user input
     private void runApp() {
         boolean running = true;
         while (running) {
@@ -49,23 +54,30 @@ public class ListApp {
                         break;
                     case 7:
                         getTotal();
+                        break;
+                    case 8:
+                        saveToFile();
+                        break;
+                    case 9:
+                        loadFromFile();
+                        break;
                     case 0:
                         System.out.println("Thank you! Come back again!");
                         running = false;
                         break;
                     default:
                         System.out.println("Sorry, input not recognized. Please enter a valid choice.");
-                } 
+                }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a number.");
             } catch (InvalidInputException e) {
                 System.out.println(e.getMessage());
+            } catch (IOException e) {
+                System.out.println("An error occurred while accessing the file.");
             }
         }
     }
 
-
-     //EFFECTS:  Prints the menu options to the console.
     private void printMenu() {
         System.out.println("\nShopping List Menu:");
         System.out.println("1. Add Item");
@@ -75,8 +87,22 @@ public class ListApp {
         System.out.println("5. Clear Purchased Items");
         System.out.println("6. Edit Item");
         System.out.println("7. Get Total Price");
+        System.out.println("8. Save to File");
+        System.out.println("9. Load from File");
         System.out.println("0. Exit");
-        System.out.println("Enter your choice: ");
+        System.out.print("Enter your choice: ");
+    }
+
+    // New methods for saving and loading
+    private void saveToFile() throws IOException {
+        jsonWriter.write(shoppingItemList);
+        System.out.println("Saved shopping list to " + JSON_STORE);
+    }
+
+    private void loadFromFile() throws IOException {
+        shoppingItemList = jsonReader.read();
+        shoppingList = new ArrayList<>(shoppingItemList.getList());
+        System.out.println("Loaded shopping list from " + JSON_STORE);
     }
 
     // MODIFIES: this.shoppingList
@@ -95,28 +121,32 @@ public class ListApp {
             int amount = Integer.parseInt(scanner.nextLine());
             validateAmount(amount);
 
-            shoppingList.add(new shoppingItem(name, price, amount));
+            shoppingItem newItem = new shoppingItem(name, price, amount);
+            shoppingList.add(newItem);
+            shoppingItemList.addItem(newItem);
             System.out.println("Item added to the shopping list.");
         } catch (NumberFormatException e) {
             throw new InvalidInputException("Invalid input. Price must be a number and quantity must be an integer.");
         }
     }
 
-    // EFFECTS: Displays all items in the shopping list. If the list is empty, indicates using  shopping list is empty
+    // EFFECTS: Displays all items in the shopping list. If the list is empty, indicates it.
     private void viewItems() {
         if (shoppingList.isEmpty()) {
             System.out.println("Shopping list is empty.");
         } else {
+            int index = 1;
             for (shoppingItem item : shoppingList) {
-                System.out.println(item.getName() + " - " + item.getAmount() 
-                        + " units - $" + item.getPrice() + " - Purchased: " + item.getPurchased());
+                System.out.println(index + ". Name: " + item.getName() + " - " + " Units: " + item.getAmount() 
+                        + " - " + " Price: $" + item.getPrice() + " - Purchased: " + item.getPurchased());
+                index++;
             }
         }
     }
 
     // MODIFIES: this.shoppingList
-    // EFFECTS:  Marks an item as purchased in the shopping list and prints statement 
-    //           If the item is not found, prints statment
+    // EFFECTS:  Marks an item as purchased in the shopping list and prints statement.
+    //           If the item is not found, prints a statement.
     private void markAsPurchased() {
         System.out.print("Enter item name to mark as purchased: ");
         String name = scanner.nextLine();
@@ -131,8 +161,8 @@ public class ListApp {
     }
 
     // MODIFIES: this.shoppingList
-    // EFFECTS:  Deletes an item from the shopping list and prints statment 
-    //           If the item is not found, prints statement
+    // EFFECTS:  Deletes an item from the shopping list and prints statement.
+    //           If the item is not found, prints statement.
     private void deleteItem() {
         System.out.print("Enter item name to delete: ");
         String name = scanner.nextLine();
@@ -146,53 +176,38 @@ public class ListApp {
         System.out.println("Item not found in the shopping list.");
     }
 
-    // MODIFIEs: this.shoppingList
+    // MODIFIES: this.shoppingList
     // EFFECTS:  Clears all purchased items from the shopping list.
     private void clearPurchasedItems() {
         shoppingList.removeIf(shoppingItem::getPurchased);
         System.out.println("All purchased items have been cleared from the shopping list.");
     }
 
-
-     //MODIFIES: this.shoppingList
-     //EFFECTS:  Edits an existing item in the shopping list. If the item is not found, indicates so.
-     //           If input is invalid, throws InvalidInputException.
-
+    // MODIFIES: this.shoppingList
+    // EFFECTS:  Edits an existing item in the shopping list. If the item is not found, indicates so.
+    //           If input is invalid, throws InvalidInputException.
     private void editItem() throws InvalidInputException {
         System.out.print("Enter item name to edit: ");
         String name = scanner.nextLine();
         for (shoppingItem item : shoppingList) {
             if (item.getName().equalsIgnoreCase(name)) {
                 try {
-                    System.out.print("Enter new name: ");
-                    String newName = scanner.nextLine();
-                    validateName(newName);
-                    System.out.print("Enter new price: ");
-                    double newPrice = Double.parseDouble(scanner.nextLine());
-                    validatePrice(newPrice);
-                    System.out.print("Enter new quantity: ");
-                    int newAmount = Integer.parseInt(scanner.nextLine());
-                    validateAmount(newAmount);
-                    item.setName(newName);
-                    item.setPrice(newPrice);
-                    item.setAmount(newAmount);
-                    System.out.println("Item updated in the shopping list.");
+                    updateItemDetails(item);
                     return; 
                 } catch (NumberFormatException e) {
-                    throw new InvalidInputException("Invalid input. Price must be number, quantity must be integer.");
+                    throw new InvalidInputException("Invalid input. Price: number, quantity: integer.");
                 } 
             }
         }
         System.out.println("Item not found in the shopping list.");
     }
 
-    //EFFECTS:  Prints the total price of all items in the shopping list.
+    // EFFECTS:  Prints the total price of all items in the shopping list.
     private void getTotal() {
-        System.out.println(shoppingItemList.getTotPrice());
+        System.out.println("Total Price: $" + shoppingItemList.getTotPrice());
     }
-    
 
-    //  EFFECTS:  Validates the item name. If the name is empty, throws InvalidInputException.
+    // EFFECTS:  Validates the item name. If the name is empty, throws InvalidInputException.
     private void validateName(String name) throws InvalidInputException {
         if (name.isEmpty()) {
             throw new InvalidInputException("Name cannot be empty.");
@@ -206,11 +221,33 @@ public class ListApp {
         }
     }
 
-    // EFFECTS: Validates the item quantity. If the quantity is not positive, throws InvalidInputException.
+    // EFFECTS:  Validates the item quantity. If the quantity is not positive, throws InvalidInputException.
     private void validateAmount(int amount) throws InvalidInputException {
         if (amount <= 0) {
             throw new InvalidInputException("Quantity must be a positive integer.");
         }
     }
-}
 
+    // MODIFIES: item
+    // EFFECTS:  Updates the details of the given item using user input.
+    //           Throws InvalidInputException if the input is invalid.
+    private void updateItemDetails(shoppingItem item) throws InvalidInputException {
+        System.out.print("Enter new name: ");
+        String newName = scanner.nextLine();
+        validateName(newName);
+
+        System.out.print("Enter new price: ");
+        double newPrice = Double.parseDouble(scanner.nextLine());
+        validatePrice(newPrice);
+
+        System.out.print("Enter new quantity: ");
+        int newAmount = Integer.parseInt(scanner.nextLine());
+        validateAmount(newAmount);
+
+        item.setName(newName);
+        item.setPrice(newPrice);
+        item.setAmount(newAmount);
+
+        System.out.println("Item updated in the shopping list.");
+    }
+}

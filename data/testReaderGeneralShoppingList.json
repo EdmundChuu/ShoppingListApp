@@ -1,0 +1,19 @@
+{
+    "name": "Test List",
+    "completion": false,
+    "items": [
+      {
+        "name": "Apple",
+        "price": 1.0,
+        "amount": 3,
+        "purchased": false
+      },
+      {
+        "name": "Banana",
+        "price": 0.5,
+        "amount": 5,
+        "purchased": true
+      }
+    ]
+  }
+  

@@ -1,19 +1,35 @@
 package model;
 
-public class shoppingItem {
+import org.json.JSONObject;
+import persistence.Writable;
+
+// Represents a shopping item
+public class shoppingItem implements Writable {
     private String name;
     private boolean purchased;
     private double price;
     private int amount;
 
-
+    // Constructor
     public shoppingItem(String name, double price, int amount) {
         this.name = name;
         this.price = price;
         this.amount = amount;
-        purchased = false;
+        this.purchased = false;
     }
 
+    // EFFECTS: returns this shoppingItem as a JSON object
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("price", price);
+        json.put("amount", amount);
+        json.put("purchased", purchased);
+        return json;
+    }
+
+    // Getters and setters
     public String getName() {
         return this.name;
     }
@@ -45,7 +61,4 @@ public class shoppingItem {
     public void setPurchased(boolean settedPurchased) {
         this.purchased = settedPurchased;
     }
-
-
 }
-

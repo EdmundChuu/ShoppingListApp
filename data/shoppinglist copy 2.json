@@ -1,0 +1,10 @@
+{
+    "completion": false,
+    "name": "Your Shopping List",
+    "items": [{
+        "amount": 3,
+        "purchased": false,
+        "price": 3,
+        "name": "d"
+    }]
+}
