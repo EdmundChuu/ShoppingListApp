@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//Creates an Shopping List App
 public class ListApp {
     private static final String JSON_STORE = "./data/shoppinglist.json";
     private ShoppingItemList shoppingItemList;
@@ -18,6 +19,8 @@ public class ListApp {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
+
+    //Runs the shopping List App
     public ListApp() {
         shoppingItemList = new ShoppingItemList("Your Shopping List");
         shoppingList = new ArrayList<>(shoppingItemList.getList());
