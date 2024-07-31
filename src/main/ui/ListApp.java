@@ -30,6 +30,7 @@ public class ListApp {
         runApp();
     }
 
+    @SuppressWarnings("methodlength")
     private void runApp() {
         boolean running = true;
         while (running) {

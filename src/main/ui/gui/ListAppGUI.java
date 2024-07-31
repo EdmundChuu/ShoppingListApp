@@ -79,7 +79,7 @@ public class ListAppGUI extends JFrame {
             }
         });
     }
-
+    //!!! break apart
     private void initializeMainPanel() {
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -221,6 +221,8 @@ public class ListAppGUI extends JFrame {
 
     private class EditItemListener implements ActionListener {
         @Override
+        
+        @SuppressWarnings("methodlength")
         public void actionPerformed(ActionEvent e) {
             try {
                 String oldName = editNameField.getText();
