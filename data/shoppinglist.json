@@ -1,5 +1,36 @@
 {
     "completion": false,
     "name": "Your Shopping List",
-    "items": []
+    "items": [
+        {
+            "amount": 333,
+            "purchased": false,
+            "price": 333,
+            "name": "jdddddd"
+        },
+        {
+            "amount": 77,
+            "purchased": false,
+            "price": 77,
+            "name": "mmmm"
+        },
+        {
+            "amount": 888,
+            "purchased": false,
+            "price": 888,
+            "name": "jjj"
+        },
+        {
+            "amount": 888,
+            "purchased": true,
+            "price": 888,
+            "name": "jhh"
+        },
+        {
+            "amount": 888,
+            "purchased": false,
+            "price": 888,
+            "name": "88888888"
+        }
+    ]
 }
