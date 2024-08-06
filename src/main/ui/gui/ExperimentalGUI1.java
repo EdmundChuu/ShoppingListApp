@@ -55,6 +55,7 @@ public class ExperimentalGUI1 extends JFrame {
         splashPanel.setLayout(new BorderLayout());
         splashPanel.setBackground(Color.BLACK);
 
+
         // Add GIF to splash screen
         JLabel gifLabel = new JLabel(new ImageIcon("src/main/ui/gui/shopneonsign.gif"));
         gifLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -77,6 +78,7 @@ public class ExperimentalGUI1 extends JFrame {
     }
 
     private void initializeMainPanel() {
+        // mainPanel = new BackgroundPanel("src/main/ui/gui/giphy/gif"); //changed
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
 

@@ -23,3 +23,15 @@ This project is intriguing because it merges practical utility with the opportun
 - As a user, I want to be able to edit items in my shopping list, including the name and the category and quanitty  of the price of the item. 
 - As a user, I want to be able to save my shopping list to file (if I so choose)
 - As a user, I want to be able to be able to load my shopping list from file (if I so choose)
+
+
+## Instructions for Grader
+- You can generate the first required action related to the user story "adding multiple items to the shopping list" by clicking the button labeled "Add Item" on the main screen.
+
+- You can generate the second required action related to the user story "adding multiple items to the shopping list" by filling out the item details in the pop-up dialog and clicking "Save".
+
+- You can locate my visual component by finding the splash screen with the GIF animation at the beginning when you start the application. Additionally, there is an interactive componenet for you to click anywhere and start the application. 
+
+- You can save the state of my application by clicking the "Save" button on the main screen.
+
+- You can reload the state of my application by clicking the "Load" button on the main screen.
