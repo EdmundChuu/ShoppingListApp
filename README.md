@@ -35,3 +35,23 @@ This project is intriguing because it merges practical utility with the opportun
 - You can save the state of my application by clicking the "Save" button on the main screen.
 
 - You can reload the state of my application by clicking the "Load" button on the main screen.
+
+##Phase 4: Task 2
+
+Logged Events:
+Tue Aug 06 19:18:10 PDT 2024
+Added d
+Tue Aug 06 19:18:11 PDT 2024
+Set as purchased
+Tue Aug 06 19:18:17 PDT 2024
+Set name to ddddd
+Tue Aug 06 19:18:17 PDT 2024
+Set amount to ddddd3.0
+Tue Aug 06 19:18:17 PDT 2024
+Set amount to ddddd3
+Tue Aug 06 19:18:18 PDT 2024
+Saved
+Tue Aug 06 19:18:20 PDT 2024
+Loaded
+Tue Aug 06 19:18:20 PDT 2024
+Set as purchased
