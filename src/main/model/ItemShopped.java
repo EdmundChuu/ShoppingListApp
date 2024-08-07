@@ -4,14 +4,14 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 // Represents a shopping item
-public class shoppingItem implements Writable {
+public class ItemShopped implements Writable {
     private String name;
     private boolean purchased;
     private double price;
     private int amount;
 
     // Constructor
-    public shoppingItem(String name, double price, int amount) {
+    public ItemShopped(String name, double price, int amount) {
         this.name = name;
         this.price = price;
         this.amount = amount;
@@ -36,6 +36,7 @@ public class shoppingItem implements Writable {
 
     public void setName(String settedName) {
         this.name = settedName;
+        EventLog.getInstance().logEvent(new Event("Set name to " + settedName));
     }
 
     public double getPrice() {
@@ -44,6 +45,7 @@ public class shoppingItem implements Writable {
 
     public void setPrice(double settedPrice) {
         this.price = settedPrice;
+        EventLog.getInstance().logEvent(new Event("Set item price to " + this.getName() + settedPrice));
     }
 
     public int getAmount() {
@@ -52,6 +54,7 @@ public class shoppingItem implements Writable {
 
     public void setAmount(int settedAmount) {
         this.amount = settedAmount;
+        EventLog.getInstance().logEvent(new Event("Set item amount to " + this.getName() + settedAmount));
     }
 
     public boolean getPurchased() {
@@ -60,5 +63,6 @@ public class shoppingItem implements Writable {
 
     public void setPurchased(boolean settedPurchased) {
         this.purchased = settedPurchased;
+        EventLog.getInstance().logEvent(new Event("Set as item as purchased"));
     }
 }

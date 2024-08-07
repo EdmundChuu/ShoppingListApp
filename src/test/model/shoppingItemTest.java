@@ -6,11 +6,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class shoppingItemTest {
-    private shoppingItem item;
+    private ItemShopped item;
 
     @Before
     public void setUp() {
-        item = new shoppingItem("Milk", 1.5, 2);
+        item = new ItemShopped("Milk", 1.5, 2);
     }
 
     @Test

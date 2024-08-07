@@ -1,7 +1,7 @@
 package ui;
 
 import model.ShoppingItemList;
-import model.shoppingItem;
+import model.ItemShopped;
 import exceptions.InvalidInputException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -15,7 +15,7 @@ public class ListApp {
     private static final String JSON_STORE = "./data/shoppinglist.json";
     private ShoppingItemList shoppingItemList;
     private Scanner scanner;
-    private ArrayList<shoppingItem> shoppingList;
+    private ArrayList<ItemShopped> shoppingList;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
@@ -125,7 +125,7 @@ public class ListApp {
             int amount = Integer.parseInt(scanner.nextLine());
             validateAmount(amount);
 
-            shoppingItem newItem = new shoppingItem(name, price, amount);
+            ItemShopped newItem = new ItemShopped(name, price, amount);
             shoppingList.add(newItem);
             shoppingItemList.addItem(newItem);
             System.out.println("Item added to the shopping list.");
@@ -140,7 +140,7 @@ public class ListApp {
             System.out.println("Shopping list is empty.");
         } else {
             int index = 1;
-            for (shoppingItem item : shoppingList) {
+            for (ItemShopped item : shoppingList) {
                 System.out.println(index + ". Name: " + item.getName() + " - " + " Units: " + item.getAmount() 
                         + " - " + " Price: $" + item.getPrice() + " - Purchased: " + item.getPurchased());
                 index++;
@@ -154,7 +154,7 @@ public class ListApp {
     private void markAsPurchased() {
         System.out.print("Enter item name to mark as purchased: ");
         String name = scanner.nextLine();
-        for (shoppingItem item : shoppingList) {
+        for (ItemShopped item : shoppingList) {
             if (item.getName().equalsIgnoreCase(name)) {
                 item.setPurchased(true);
                 System.out.println("Item marked as purchased.");
@@ -170,7 +170,7 @@ public class ListApp {
     private void deleteItem() {
         System.out.print("Enter item name to delete: ");
         String name = scanner.nextLine();
-        for (shoppingItem item : shoppingList) {
+        for (ItemShopped item : shoppingList) {
             if (item.getName().equalsIgnoreCase(name)) {
                 shoppingList.remove(item);
                 System.out.println("Item deleted from the shopping list.");
@@ -183,7 +183,7 @@ public class ListApp {
     // MODIFIES: this.shoppingList
     // EFFECTS:  Clears all purchased items from the shopping list.
     private void clearPurchasedItems() {
-        shoppingList.removeIf(shoppingItem::getPurchased);
+        shoppingList.removeIf(ItemShopped::getPurchased);
         System.out.println("All purchased items have been cleared from the shopping list.");
     }
 
@@ -193,7 +193,7 @@ public class ListApp {
     private void editItem() throws InvalidInputException {
         System.out.print("Enter item name to edit: ");
         String name = scanner.nextLine();
-        for (shoppingItem item : shoppingList) {
+        for (ItemShopped item : shoppingList) {
             if (item.getName().equalsIgnoreCase(name)) {
                 try {
                     updateItemDetails(item);
@@ -235,7 +235,7 @@ public class ListApp {
     // MODIFIES: item
     // EFFECTS:  Updates the details of the given item using user input.
     //           Throws InvalidInputException if the input is invalid.
-    private void updateItemDetails(shoppingItem item) throws InvalidInputException {
+    private void updateItemDetails(ItemShopped item) throws InvalidInputException {
         System.out.print("Enter new name: ");
         String newName = scanner.nextLine();
         validateName(newName);

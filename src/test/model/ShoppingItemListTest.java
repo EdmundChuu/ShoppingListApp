@@ -30,7 +30,7 @@ public class ShoppingItemListTest {
 
     @Test
     public void testAddItem() {
-        shoppingItem item = new shoppingItem("Milk", 1.5, 2);
+        ItemShopped item = new ItemShopped("Milk", 1.5, 2);
         shoppingList.addItem(item);
         assertEquals(1, shoppingList.getList().size());
         assertEquals("Milk", shoppingList.getList().get(0).getName());
@@ -38,8 +38,8 @@ public class ShoppingItemListTest {
 
     @Test
     public void testGetTotPrice() {
-        shoppingItem item1 = new shoppingItem("Milk", 1.5, 2);
-        shoppingItem item2 = new shoppingItem("Bread", 2.0, 1);
+        ItemShopped item1 = new ItemShopped("Milk", 1.5, 2);
+        ItemShopped item2 = new ItemShopped("Bread", 2.0, 1);
         shoppingList.addItem(item1);
         shoppingList.addItem(item2);
         assertEquals(5.0, shoppingList.getTotPrice(), 0.0);
@@ -58,16 +58,16 @@ public class ShoppingItemListTest {
 
     @Test
     public void testGetList() {
-        shoppingItem item = new shoppingItem("Milk", 1.5, 2);
+        ItemShopped item = new ItemShopped("Milk", 1.5, 2);
         shoppingList.addItem(item);
-        ArrayList<shoppingItem> list = shoppingList.getList();
+        ArrayList<ItemShopped> list = shoppingList.getList();
         assertEquals(1, list.size());
         assertEquals("Milk", list.get(0).getName());
     }
 
     @Test
     public void testToJson() {
-        shoppingItem item = new shoppingItem("Milk", 1.5, 2);
+        ItemShopped item = new ItemShopped("Milk", 1.5, 2);
         shoppingList.addItem(item);
 
         JSONObject json = shoppingList.toJson();

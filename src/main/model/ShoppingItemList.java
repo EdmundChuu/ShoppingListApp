@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class ShoppingItemList implements Writable {
     private String name;
     private boolean completion;
-    private ArrayList<shoppingItem> theList;
+    private ArrayList<ItemShopped> theList;
 
     // Constructor
     public ShoppingItemList(String name) {
@@ -32,7 +32,7 @@ public class ShoppingItemList implements Writable {
     // EFFECTS: converts the list of items to a JSON array
     private JSONArray itemsToJson() {
         JSONArray jsonArray = new JSONArray();
-        for (shoppingItem item : theList) {
+        for (ItemShopped item : theList) {
             jsonArray.put(item.toJson());
         }
         return jsonArray;
@@ -49,7 +49,7 @@ public class ShoppingItemList implements Writable {
 
     public double getTotPrice() {
         double totPrice = 0;
-        for (shoppingItem si : this.theList) {
+        for (ItemShopped si : this.theList) {
             totPrice += si.getPrice() * si.getAmount();
         }
         return totPrice;
@@ -57,17 +57,20 @@ public class ShoppingItemList implements Writable {
 
     public void setCompletion(boolean settedCompletion) {
         this.completion = settedCompletion;
+        EventLog.getInstance().logEvent(new Event("Loaded Shopping List"));
     }
 
     public boolean getCompletion() {
-        return this.completion;
+        EventLog.getInstance().logEvent(new Event("Saved Shopping List"));
+        return this.completion;  
     }
 
-    public ArrayList<shoppingItem> getList() {
+    public ArrayList<ItemShopped> getList() {
         return this.theList;
     }
 
-    public void addItem(shoppingItem item) {
+    public void addItem(ItemShopped item) {
         this.theList.add(item);
+        EventLog.getInstance().logEvent(new Event("Added " + item.getName() + " to shopping list"));
     }
 }

@@ -1,7 +1,9 @@
 package ui.gui;
 
+import model.EventLog;
+import model.Event;
 import model.ShoppingItemList;
-import model.shoppingItem;
+import model.ItemShopped;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -82,9 +84,10 @@ public class ExperimentalGUI1 extends JFrame {
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
 
+        //CHANGE
         // Button panel
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(1, 3));
+        buttonPanel.setLayout(new GridLayout(1, 4));
 
         JButton addButton = new JButton("Add Item");
         addButton.addActionListener(new AddItemListener());
@@ -128,12 +131,12 @@ public class ExperimentalGUI1 extends JFrame {
         detailPanel.add(editPanel, BorderLayout.CENTER);
 
         // Remove panel
-        JPanel removePanel = new JPanel();
-        removePanel.setLayout(new FlowLayout());
-        JButton removeButton = new JButton("Remove Item");
-        removeButton.addActionListener(new RemoveItemListener());
-        removePanel.add(removeButton);
-        detailPanel.add(removePanel, BorderLayout.SOUTH);
+        // JPanel removePanel = new JPanel();
+        // removePanel.setLayout(new FlowLayout());
+        // JButton removeButton = new JButton("Remove Item");
+        // removeButton.addActionListener(new RemoveItemListener(item));
+        // removePanel.add(removeButton);
+        // detailPanel.add(removePanel, BorderLayout.SOUTH);
     }
 
     private void showSplashScreen() {
@@ -157,8 +160,8 @@ public class ExperimentalGUI1 extends JFrame {
         JPanel itemListPanel = new JPanel();
         itemListPanel.setLayout(new BoxLayout(itemListPanel, BoxLayout.Y_AXIS));
 
-        List<shoppingItem> items = shoppingItemList.getList();
-        for (shoppingItem item : items) {
+        List<ItemShopped> items = shoppingItemList.getList();
+        for (ItemShopped item : items) {
             JPanel itemPanel = new JPanel();
             itemPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
@@ -189,7 +192,7 @@ public class ExperimentalGUI1 extends JFrame {
 
         // Add the button panel again
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(1, 3));
+        buttonPanel.setLayout(new GridLayout(1, 4));
 
         JButton addButton = new JButton("Add Item");
         addButton.addActionListener(new AddItemListener());
@@ -202,6 +205,10 @@ public class ExperimentalGUI1 extends JFrame {
         JButton loadButton = new JButton("Load");
         loadButton.addActionListener(new LoadListener());
         buttonPanel.add(loadButton);
+
+        JButton leaveButton = new JButton("Leave");
+        leaveButton.addActionListener(new LeaveListener());
+        buttonPanel.add(leaveButton);
 
         mainPanel.add(buttonPanel, BorderLayout.NORTH);
     }
@@ -229,7 +236,7 @@ public class ExperimentalGUI1 extends JFrame {
                         return;
                     }
 
-                    shoppingItem item = new shoppingItem(name, price, quantity);
+                    ItemShopped item = new ItemShopped(name, price, quantity);
                     shoppingItemList.addItem(item);
                     updateDisplay();
                 } catch (NumberFormatException ex) {
@@ -303,8 +310,8 @@ public class ExperimentalGUI1 extends JFrame {
                     return;
                 }
 
-                List<shoppingItem> items = shoppingItemList.getList();
-                for (shoppingItem item : items) {
+                List<ItemShopped> items = shoppingItemList.getList();
+                for (ItemShopped item : items) {
                     if (item.getName().equalsIgnoreCase(oldName)) {
                         item.setPrice(newPrice);
                         item.setAmount(newQuantity);
@@ -338,9 +345,9 @@ public class ExperimentalGUI1 extends JFrame {
     }
 
     private class PurchasedButtonListener implements ActionListener {
-        private shoppingItem item;
+        private ItemShopped item;
 
-        public PurchasedButtonListener(shoppingItem item) {
+        public PurchasedButtonListener(ItemShopped item) {
             this.item = item;
         }
 
@@ -352,9 +359,9 @@ public class ExperimentalGUI1 extends JFrame {
     }
 
     private class EditButtonListener implements ActionListener {
-        private shoppingItem item;
+        private ItemShopped item;
 
-        public EditButtonListener(shoppingItem item) {
+        public EditButtonListener(ItemShopped item) {
             this.item = item;
         }
 
@@ -406,34 +413,51 @@ public class ExperimentalGUI1 extends JFrame {
         }
     }
 
-    private class RemoveItemListener implements ActionListener {
+    // private class RemoveItemListener implements ActionListener {
+    //     private ItemShopped item;
+
+    //     @Override
+    //     public void actionPerformed(ActionEvent e) {
+    //         if (item.getName() != null && !item.getName().isEmpty()) {
+    //             boolean itemFound = false;
+    //             List<ItemShopped> items = shoppingItemList.getList();
+    //             for (int i = 0; i < items.size(); i++) {
+    //                 if (items.get(i).getName().equalsIgnoreCase(item.getName())) {
+    //                     items.remove(i);
+    //                     itemFound = true;
+    //                     break;
+    //                 }
+    //             }
+
+    //             if (itemFound) {
+    //                 updateDisplay();
+    //                 JOptionPane.showMessageDialog(ExperimentalGUI1.this, "Item removed successfully.",
+    //                         "Success", JOptionPane.INFORMATION_MESSAGE);
+    //             } else {
+    //                 JOptionPane.showMessageDialog(ExperimentalGUI1.this, "Item not found.",
+    //                         "Error", JOptionPane.ERROR_MESSAGE);
+    //             }
+    //         }
+    //     }
+    // }
+
+    private class LeaveListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String name = JOptionPane.showInputDialog("Enter the name of the item to remove:");
-            if (name != null && !name.isEmpty()) {
-                boolean itemFound = false;
-                List<shoppingItem> items = shoppingItemList.getList();
-                for (int i = 0; i < items.size(); i++) {
-                    if (items.get(i).getName().equalsIgnoreCase(name)) {
-                        items.remove(i);
-                        itemFound = true;
-                        break;
-                    }
-                }
-
-                if (itemFound) {
-                    updateDisplay();
-                    JOptionPane.showMessageDialog(ExperimentalGUI1.this, "Item removed successfully.",
-                            "Success", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(ExperimentalGUI1.this, "Item not found.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
+            JOptionPane.showMessageDialog(ExperimentalGUI1.this, "Thanks for using the Shopping List App. Goodbye!",
+                    "Goodbye", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+            printLoggedEvents();
+            
         }
     }
 
-    public static void main(String[] args) {
-        new ExperimentalGUI1();
+    // EFFECTS:
+    // Prints all logged events to the console.
+    private void printLoggedEvents() {
+        System.out.println("Logged Events:");
+        for (Event event : EventLog.getInstance()) {
+            System.out.println(event);
+        }
     }
 }

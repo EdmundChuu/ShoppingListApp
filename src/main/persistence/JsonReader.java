@@ -1,6 +1,6 @@
 package persistence;
 
-import model.shoppingItem;
+import model.ItemShopped;
 import model.ShoppingItemList;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -48,7 +48,7 @@ public class JsonReader {
             String name = nextItem.getString("name");
             double price = nextItem.getDouble("price");
             int amount = nextItem.getInt("amount");
-            shoppingItem item = new shoppingItem(name, price, amount);
+            ItemShopped item = new ItemShopped(name, price, amount);
             item.setPurchased(nextItem.getBoolean("purchased"));
             shoppingItemList.getList().add(item);
         }

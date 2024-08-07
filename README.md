@@ -55,3 +55,6 @@ Tue Aug 06 19:18:20 PDT 2024
 Loaded
 Tue Aug 06 19:18:20 PDT 2024
 Set as purchased
+
+##"Phase 4: Task 3"
+I think that I would make more separate classes for the GUI and also I will try to make more exceptions to handle different cases. I would want to reduce coupling. Also I can reduce conditional locks within the gui method for more clarity. 

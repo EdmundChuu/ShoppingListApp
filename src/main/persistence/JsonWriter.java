@@ -1,6 +1,6 @@
 package persistence;
 
-import model.shoppingItem;
+import model.ItemShopped;
 import model.ShoppingItemList;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,14 +34,14 @@ public class JsonWriter {
     private JSONArray itemsToJson(ShoppingItemList shoppingItemList) {
         JSONArray jsonArray = new JSONArray();
 
-        for (shoppingItem item : shoppingItemList.getList()) {
+        for (ItemShopped item : shoppingItemList.getList()) {
             jsonArray.put(itemToJson(item));
         }
         return jsonArray;
     }
 
     // EFFECTS: returns a JSON object representing a shopping item
-    private JSONObject itemToJson(shoppingItem item) {
+    private JSONObject itemToJson(ItemShopped item) {
         JSONObject json = new JSONObject();
         json.put("name", item.getName());
         json.put("price", item.getPrice());

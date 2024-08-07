@@ -1,7 +1,7 @@
 package model;
 
-import model.ShoppingItemList;
-import model.shoppingItem;
+// import model.ShoppingItemList;
+// import model.shoppingItem;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -46,8 +46,8 @@ class JsonWriterTest extends JsonTest {
     void testWriterGeneralShoppingList() {
         try {
             ShoppingItemList shoppingItemList = new ShoppingItemList("Test List");
-            shoppingItemList.addItem(new shoppingItem("Apple", 1.0, 3));
-            shoppingItemList.addItem(new shoppingItem("Banana", 0.5, 5));
+            shoppingItemList.addItem(new ItemShopped("Apple", 1.0, 3));
+            shoppingItemList.addItem(new ItemShopped("Banana", 0.5, 5));
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralShoppingList.json");
             writer.write(shoppingItemList);
 
@@ -55,7 +55,7 @@ class JsonWriterTest extends JsonTest {
             shoppingItemList = reader.read();
             assertEquals("Test List", shoppingItemList.getListName());
             assertFalse(shoppingItemList.getCompletion());
-            List<shoppingItem> items = shoppingItemList.getList();
+            List<ItemShopped> items = shoppingItemList.getList();
             assertEquals(2, items.size());
             checkShoppingItem("Apple", 1.0, 3, false, items.get(0));
             checkShoppingItem("Banana", 0.5, 5, false, items.get(1));

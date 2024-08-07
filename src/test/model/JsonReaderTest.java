@@ -1,7 +1,7 @@
 package model;
 
-import model.ShoppingItemList;
-import model.shoppingItem;
+// import model.ShoppingItemList;
+// import model.shoppingItem;
 import persistence.JsonReader;
 
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ class JsonReaderTest extends JsonTest {
             ShoppingItemList shoppingItemList = reader.read();
             assertEquals("Test List", shoppingItemList.getListName());
             assertFalse(shoppingItemList.getCompletion());
-            List<shoppingItem> items = shoppingItemList.getList();
+            List<ItemShopped> items = shoppingItemList.getList();
             assertEquals(2, items.size());
             checkShoppingItem("Apple", 1.0, 3, false, items.get(0));
             checkShoppingItem("Banana", 0.5, 5, true, items.get(1));
