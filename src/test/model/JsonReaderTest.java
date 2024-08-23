@@ -19,7 +19,7 @@ class JsonReaderTest extends JsonTest {
             ShoppingItemList shoppingItemList = reader.read();
             fail("IOException expected");
         } catch (IOException e) {
-            // passddddd
+            // passdddd
         }
     }
 
